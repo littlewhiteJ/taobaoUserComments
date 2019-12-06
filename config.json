@@ -1,0 +1,24 @@
+{
+    "segmentMethod":"jieba",
+    "selectedMethod":"pyltp",
+    "vectorSize":50,
+    "nClusters":10,
+
+    "trainPath":"data/trainComments.txt",
+    "testPath":"data/testComments.txt",
+    "outputsPath":"data/outputs.txt",
+    
+    "preSegTrainPath":"train/preSegTrain.txt",
+    "preSegTestPath":"test/preSegTest.txt",
+
+    "segTrainPath":"train/segTrain.txt",
+    "segTestPath":"test/segTest.txt",
+
+    "vecModelPath":"models/word2vec.model",
+
+    "selectedPath":"test/selectedWords.txt",
+
+    "ltpPath":"ltp_data_v3.4.0",
+    "stopWordsPath":"data/stopwords.txt",
+    "sentimentWordsPath":"data/sentimentWords.txt"
+}
