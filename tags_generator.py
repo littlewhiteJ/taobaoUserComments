@@ -1,6 +1,8 @@
 import json
 from utils import *
+from timeRecord import timeRecord
 
+timerecord = timeRecord()
 
 def word2vec_g(config):
     ltpPath = config['ltpPath']
@@ -14,13 +16,18 @@ def word2vec_g(config):
     preSegTrainPath = config['preSegTrainPath']
     segTrainPath = config['segTrainPath']
 
-
+    
+    timerecord.start()
     with open(trainPath, 'r') as trainf:
         trainSentences = trainf.readlines()
+    timerecord.record('load train file')
 
     trainSentences = preSegment(trainSentences, preSegTrainPath)
+    timerecord.record('trainPreSegment')
     trainWordList = segment(trainSentences, ltpPath, stopWordsPath, segmentMethod, segTrainPath)
+    timerecord.record('trainSegment')
     word2Vec(trainWordList, vectorSize, vecModelPath)
+    timerecord.record('word2vec')
 
     # print(trainWordList)
 
@@ -45,16 +52,17 @@ def cluster_g(config):
 
     with open(testPath, 'r') as testf:
         testSentences = testf.readlines()
-    
+    timerecord.record('load test file')
     testSentences = preSegment(testSentences, preSegTestPath)
-
+    timerecord.record('testPreSegment')
     if selectMethod == 'pyltp':
         testWordList = segment(testSentences, ltpPath, stopWordsPath, segmentMethod, segTestPath)
         candidateWords = candidateSelectPyltp(testWordList, ltpPath, sentimentWordsPath, selectedPath)
     else:
         candidateWords = candidateSelectJieba(testSentences, stopWordsPath, sentimentWordsPath, selectedPath)
-
+    timerecord.record('candidate')
     tags = cluster(candidateWords, nClusters, vecModelPath, vectorSize, outputsPath)
+    timerecord.record('cluster')
 
     for tag in tags:
         print(''.join(tag))
@@ -65,5 +73,6 @@ if __name__ == '__main__':
 
     word2vec_g(config)
     cluster_g(config)
+    timerecord.print()
 
 
