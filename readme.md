@@ -29,59 +29,67 @@
 
 - pip install jieba
 
-## 简单使用方法
+
+
+## 参数简介
 
 所有参数都在config.json里调
 
-- segmentMethod 
+#### segmentMethod 
 
 用jieba还是pyltp分词
 
 
 
-- selectedMethod
+#### selectedMethod
 
 用jieba还是pyltp抽取规则
 
 
 
-- vectorSize
+#### vectorSize
 
 词向量长度
 
 
 
-- nCluster
+#### nCluster
 
 聚类个数
 
 
 
-- data/ 
+#### ltpPath
+
+放ltp模型的文件夹
+
+
+
+## 文件夹简介
+
+#### data/ 
 
 下面包括训练集，测试集，最终输出，停用词表和情感词典
 
 
 
-- train/ 
+#### train/ 
 
 下面包括训练集处理过程中的中间数据，路径改为“”后则不输出
 
 
 
-- test/ 
+#### test/ 
 
 同上
 
 
 
-- models/ 
+#### models/ 
 
 是生成的词向量模型所在文件夹
 
 
 
-- ltpPath
 
-放ltp模型的文件夹
 

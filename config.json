@@ -20,5 +20,6 @@
 
     "ltpPath":"ltp_data_v3.4.0",
     "stopWordsPath":"data/stopwords.txt",
-    "sentimentWordsPath":"data/sentimentWords.txt"
+    "sentimentWordsPath":"data/sentimentWords.txt",
+    "userDict":"data/userdict.txt"
 }

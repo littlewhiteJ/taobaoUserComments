@@ -128,7 +128,7 @@ def candidateSelectPyltp(testWordList, ltpPath, sentimentWordsPath, selectedPath
     
     return all_words_coll
 
-def candidateSelectJieba(testSentences, stopWordsPath, sentimentWordsPath, selectedPath):
+def candidateSelectJieba(testSentences, stopWordsPath, sentimentWordsPath, userDict, selectedPath):
     with open(sentimentWordsPath, 'r') as f:
         sentimentWords = f.readlines()
     sentimentSet = set()
@@ -141,7 +141,10 @@ def candidateSelectJieba(testSentences, stopWordsPath, sentimentWordsPath, selec
     for i in range(len(stopWords)):
         stopSet.add(stopWords[i].strip())
 
+    import jieba
     import jieba.posseg as pseg
+    if userDict != '':
+        jieba.load_userdict(userDict)
 
     all_words_coll = []
     for sentence in testSentences:
@@ -209,7 +212,7 @@ def word2Vec(trainWordList, vectorSize, vecModelPath):
 
 
 
-def segment(sentences, ltpPath, stopWordsPath, method, segPath):
+def segment(sentences, ltpPath, stopWordsPath, userDict, method, segPath):
     cws_model_path = os.path.join(ltpPath, 'cws.model')
     if method == 'pyltp':
         from pyltp import Segmentor
@@ -217,6 +220,8 @@ def segment(sentences, ltpPath, stopWordsPath, method, segPath):
         segmentor.load(cws_model_path)
     else:
         import jieba
+        if userDict != '':
+            jieba.load_userdict(userDict)
 
     with open(stopWordsPath, 'r') as f:
         stopWords = f.readlines()

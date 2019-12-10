@@ -8,6 +8,7 @@ def word2vec_g(config):
     ltpPath = config['ltpPath']
     stopWordsPath = config['stopWordsPath']
     segmentMethod = config['segmentMethod']
+    userDict = config['userDict']
 
     vectorSize = config['vectorSize']
     vecModelPath = config['vecModelPath']
@@ -24,7 +25,7 @@ def word2vec_g(config):
 
     trainSentences = preSegment(trainSentences, preSegTrainPath)
     timerecord.record('trainPreSegment')
-    trainWordList = segment(trainSentences, ltpPath, stopWordsPath, segmentMethod, segTrainPath)
+    trainWordList = segment(trainSentences, ltpPath, stopWordsPath, userDict, segmentMethod, segTrainPath)
     timerecord.record('trainSegment')
     word2Vec(trainWordList, vectorSize, vecModelPath)
     timerecord.record('word2vec')
@@ -35,6 +36,7 @@ def cluster_g(config):
     ltpPath = config['ltpPath']
     stopWordsPath = config['stopWordsPath']
     segmentMethod = config['segmentMethod']
+    userDict = config['userDict']
 
     selectedPath = config['selectedPath']
     selectMethod = config['selectedMethod']
@@ -56,10 +58,10 @@ def cluster_g(config):
     testSentences = preSegment(testSentences, preSegTestPath)
     timerecord.record('testPreSegment')
     if selectMethod == 'pyltp':
-        testWordList = segment(testSentences, ltpPath, stopWordsPath, segmentMethod, segTestPath)
+        testWordList = segment(testSentences, ltpPath, stopWordsPath, userDict, segmentMethod, segTestPath)
         candidateWords = candidateSelectPyltp(testWordList, ltpPath, sentimentWordsPath, selectedPath)
     else:
-        candidateWords = candidateSelectJieba(testSentences, stopWordsPath, sentimentWordsPath, selectedPath)
+        candidateWords = candidateSelectJieba(testSentences, stopWordsPath, sentimentWordsPath, userDict, selectedPath)
     timerecord.record('candidate')
     tags = cluster(candidateWords, nClusters, vecModelPath, vectorSize, outputsPath)
     timerecord.record('cluster')
