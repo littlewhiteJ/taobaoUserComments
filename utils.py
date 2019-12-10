@@ -189,7 +189,7 @@ def candidateSelectJieba(testSentences, stopWordsPath, sentimentWordsPath, userD
             all_words_coll.append(words_coll)
 
     # sentiment
-    if sentimentWordsPath != '':
+    if selectedPath != '':
         with open(selectedPath, 'w') as f:
             for words in all_words_coll:
                 write_words(words, f)
